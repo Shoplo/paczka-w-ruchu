@@ -1,0 +1,10 @@
+{
+    "name": "shoplo/paczka-w-ruchu",
+    "require": {
+    },
+    "autoload": {
+        "psr-0": {
+            "PaczkaWRuchu": "src/"
+        }
+    }
+}
