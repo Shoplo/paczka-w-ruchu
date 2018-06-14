@@ -2,8 +2,8 @@
 
 require_once __DIR__.'/autoload.php';
 
-$partnerId = 'TEST002921';
-$partnerKey = '0A9BFF5A32';
+$partnerId = 'XXX';
+$partnerKey = 'XXX';
 
 $paczka = new \PaczkaWRuchu\PaczkaWRuchuClient($partnerId, $partnerKey);
 //$rsp = $paczka->getAllRuchStores();
