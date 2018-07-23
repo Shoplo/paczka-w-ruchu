@@ -1,13 +1,6 @@
 <?php
 
-namespace PaczkaWRuchu\Model;
-
-/**
- * Created by PhpStorm.
- * User: adrianadamiec
- * Date: 13.06.2018
- * Time: 13:03
- */
+namespace Shoplo\PaczkaWRuchu\Model;
 
 class GenerateProtocolRequest extends BaseRequest
 {
@@ -22,5 +15,4 @@ class GenerateProtocolRequest extends BaseRequest
     {
         $this->parcels = $Parcels;
     }
-
 }

@@ -1,15 +1,14 @@
 <?php
-
-namespace PaczkaWRuchu\Model;
-
 /**
  * Created by PhpStorm.
  * User: adrianadamiec
  * Date: 13.06.2018
- * Time: 13:03
+ * Time: 16:35
  */
 
-class BusinessPackResponse
+namespace Shoplo\PaczkaWRuchu\Model;
+
+class BasePackResponse
 {
     public $Err;
     public $ErrDes;
@@ -21,19 +20,14 @@ class BusinessPackResponse
     public $NameCL;
     public $NrCL;
 
-    public $label;
-
     /**
-     * BusinessPackResponse constructor.
-     * @param $rspArr
-     * @param $label
+     * BasePackResponse constructor.
+     * @param $pack
      */
-    public function __construct($rspArr, $label)
+    public function __construct($pack)
     {
-        foreach ($rspArr as $item => $value) {
+        foreach ((array)$pack as $item => $value) {
             $this->{$item} = $value;
         }
-        $this->label = $label;
     }
-
 }

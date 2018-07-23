@@ -1,6 +1,6 @@
 <?php
 
-namespace PaczkaWRuchu\Model;
+namespace Shoplo\PaczkaWRuchu\Model;
 
 /**
  * Created by PhpStorm.

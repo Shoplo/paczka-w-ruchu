@@ -1,52 +1,53 @@
 <?php
 
-namespace PaczkaWRuchu;
+namespace Shoplo\PaczkaWRuchu;
 
-use PaczkaWRuchu\Model\BaseRequest;
-use PaczkaWRuchu\Model\BusinessPackLabelRequest;
-use PaczkaWRuchu\Model\BusinessPackListRequest;
-use PaczkaWRuchu\Model\BusinessPackListResponse;
-use PaczkaWRuchu\Model\BusinessPackRequest;
-use PaczkaWRuchu\Model\BusinessPackResponse;
-use PaczkaWRuchu\Model\GenerateProtocolRequest;
-use PaczkaWRuchu\Model\GenerateProtocolResponse;
+use Shoplo\PaczkaWRuchu\Model\BaseRequest;
+use Shoplo\PaczkaWRuchu\Model\BusinessPackLabelRequest;
+use Shoplo\PaczkaWRuchu\Model\BusinessPackListRequest;
+use Shoplo\PaczkaWRuchu\Model\BusinessPackListResponse;
+use Shoplo\PaczkaWRuchu\Model\BusinessPackRequest;
+use Shoplo\PaczkaWRuchu\Model\BusinessPackResponse;
+use Shoplo\PaczkaWRuchu\Model\GenerateProtocolRequest;
+use Shoplo\PaczkaWRuchu\Model\GenerateProtocolResponse;
 
-/**
- * Created by PhpStorm.
- * User: adrianadamiec
- * Date: 13.06.2018
- * Time: 12:09
- */
 class PaczkaWRuchuClient extends \SoapClient
 {
+    public const WSDL = 'https://api.paczkawruchu.pl/WebServicePwRProd/WebServicePwR.asmx?wsdl';
+    public const WSDL_TEST = 'https://api-test.paczkawruchu.pl/WebServicePwR/WebServicePwRTest.asmx?wsdl';
+
     private $partnerId;
     private $partnerKey;
 
-    public function __construct($partnerId, $partnerKey)
+    public function __construct(string $partnerId, string $partnerKey, string $wsdl = self::WSDL_TEST, array $options = [])
     {
-        $this->partnerId = $partnerId;
+        $this->partnerId  = $partnerId;
         $this->partnerKey = $partnerKey;
 
-        parent::__construct(
-            'https://api-test.paczkawruchu.pl/WebServicePwR/WebServicePwRTest.asmx?WSDL',
-            [
-                'trace' => true,
-                'encoding' => 'UTF-8',
-                'stream_context' => stream_context_create(
-                    [
-                        'ssl' => [
-                            'crypto_method' => STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT,
-                        ],
-                    ]
-                ),
-            ]
-        );
+        $options = array_merge($options, $this->getDefaultOptions());
+
+        parent::__construct($wsdl, $options);
     }
 
-    private function getAuthParams()
+    private function getDefaultOptions(): array
     {
-        $params = new BaseRequest();
-        $params->PartnerID = $this->partnerId;
+        return [
+            'trace'          => true,
+            'encoding'       => 'UTF-8',
+            'stream_context' => stream_context_create(
+                [
+                    'ssl' => [
+                        'crypto_method' => STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT,
+                    ],
+                ]
+            ),
+        ];
+    }
+
+    private function getAuthParams(): BaseRequest
+    {
+        $params             = new BaseRequest();
+        $params->PartnerID  = $this->partnerId;
         $params->PartnerKey = $this->partnerKey;
 
         return $params;
@@ -68,9 +69,9 @@ class PaczkaWRuchuClient extends \SoapClient
 
         $response = null;
         if ($rsp->GenerateLabelBusinessPackResult && $rsp->GenerateLabelBusinessPackResult->any) {
-            $rspXml = simplexml_load_string($rsp->GenerateLabelBusinessPackResult->any);
+            $rspXml    = simplexml_load_string($rsp->GenerateLabelBusinessPackResult->any);
             $labelData = isset($rsp->LabelData) ? $rsp->LabelData : null;
-            $response = new BusinessPackResponse((array)$rspXml->NewDataSet->GenerateLabelBusinessPack, $labelData);
+            $response  = new BusinessPackResponse((array)$rspXml->NewDataSet->GenerateLabelBusinessPack, $labelData);
         }
 
         return $response;
@@ -84,9 +85,9 @@ class PaczkaWRuchuClient extends \SoapClient
 
         $response = null;
         if ($rsp->GenerateBusinessPackResult && $rsp->GenerateBusinessPackResult->any) {
-            $rspXml = simplexml_load_string($rsp->GenerateBusinessPackResult->any);
+            $rspXml    = simplexml_load_string($rsp->GenerateBusinessPackResult->any);
             $labelData = isset($rsp->LabelData) ? $rsp->LabelData : null;
-            $response = new BusinessPackResponse((array)$rspXml->NewDataSet->GenerateBusinessPack, $labelData);
+            $response  = new BusinessPackResponse((array)$rspXml->NewDataSet->GenerateBusinessPack, $labelData);
         }
 
         return $response;
@@ -104,7 +105,7 @@ class PaczkaWRuchuClient extends \SoapClient
             $tmpRsp = ((array)$rspXml->NewDataSet);
 
             $labelData = isset($rsp->LabelData) ? $rsp->LabelData : null;
-            $response = new BusinessPackListResponse($tmpRsp['GenerateLabelBusinessPackList'], $labelData);
+            $response  = new BusinessPackListResponse($tmpRsp['GenerateLabelBusinessPackList'], $labelData);
         }
 
         return $response;
@@ -136,7 +137,7 @@ class PaczkaWRuchuClient extends \SoapClient
             $tmpRsp = ((array)$rspXml->NewDataSet);
 
             $labelData = isset($rsp->LabelData) ? $rsp->LabelData : null;
-            $response = new GenerateProtocolResponse($tmpRsp['Table'], $labelData);
+            $response  = new GenerateProtocolResponse($tmpRsp['Table'], $labelData);
         }
 
         return $response;
