@@ -7,3 +7,5 @@ php:
 cache:
   directories:
     - $HOME/.composer/cache
+
+install: composer update --prefer-dist --no-interaction
