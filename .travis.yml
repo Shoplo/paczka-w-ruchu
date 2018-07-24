@@ -9,3 +9,6 @@ cache:
     - $HOME/.composer/cache
 
 install: composer update --prefer-dist --no-interaction
+
+notifications:
+  slack: 'shoplo:gC0Lmjb9VgeRjzVjbdEKlvdR#tests'
