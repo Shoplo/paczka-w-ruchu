@@ -5,7 +5,7 @@ namespace Shoplo\PaczkaWRuchu\Model;
 class GenerateProtocolRequest extends BaseRequest
 {
     /** @var mixed */
-    public $Parcels;
+    public $parcels;
 
     /**
      * GenerateProtocolRequest constructor.
@@ -13,6 +13,6 @@ class GenerateProtocolRequest extends BaseRequest
      */
     public function __construct(array $parcels)
     {
-        $this->Parcels = implode(', ', $parcels);
+        $this->parcels = $parcels;
     }
 }
