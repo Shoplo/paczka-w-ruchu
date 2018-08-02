@@ -127,7 +127,7 @@ class PaczkaWRuchuClient extends \SoapClient
         return $response;
     }
 
-    public function generateProtocolLabel(GenerateProtocolRequest $generateProtocolRequest)
+    public function generateProtocolLabel(GenerateProtocolRequest $generateProtocolRequest): ?GenerateProtocolResponse
     {
         $generateProtocolRequest->setAuthParams($this->partnerId, $this->partnerKey);
 
