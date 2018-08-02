@@ -12,10 +12,14 @@ class GenerateProtocolResponse implements ResponseInterface
      * @param $packArr
      * @param $label
      */
-    public function __construct($packArr, $label)
+    public function __construct(array $response, $label)
     {
-        foreach ($packArr as $pack) {
+        if (array_key_exists('Err', $response)) {
             $this->packList[] = new BaseProtocolResponse((array)$pack);
+        } else {
+            foreach ($response as $pack) {
+                $this->packList[] = new BaseProtocolResponse((array)$pack);
+            }
         }
 
         $this->label = $label;

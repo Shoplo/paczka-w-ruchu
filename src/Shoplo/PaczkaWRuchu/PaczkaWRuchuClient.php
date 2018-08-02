@@ -136,10 +136,9 @@ class PaczkaWRuchuClient extends \SoapClient
         $response = null;
         if ($rsp->GenerateProtocolResult && $rsp->GenerateProtocolResult->any) {
             $rspXml = simplexml_load_string($rsp->GenerateProtocolResult->any);
-            $tmpRsp = ((array)$rspXml->NewDataSet);
+            $tmpRsp = (array)$rspXml->NewDataSet;
 
-            $labelData = isset($rsp->LabelData) ? $rsp->LabelData : null;
-            $response  = new GenerateProtocolResponse($tmpRsp['Table'], $labelData);
+            $response = new GenerateProtocolResponse($tmpRsp['Table'], $rsp->LabelData ?? null);
         }
 
         return $response;
