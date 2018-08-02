@@ -8,6 +8,8 @@ use Shoplo\PaczkaWRuchu\Model\BusinessPackListRequest;
 use Shoplo\PaczkaWRuchu\Model\BusinessPackListResponse;
 use Shoplo\PaczkaWRuchu\Model\BusinessPackRequest;
 use Shoplo\PaczkaWRuchu\Model\BusinessPackResponse;
+use Shoplo\PaczkaWRuchu\Model\BusinessPackStatusRequest;
+use Shoplo\PaczkaWRuchu\Model\BusinessPackStatusResponse;
 use Shoplo\PaczkaWRuchu\Model\GenerateProtocolRequest;
 use Shoplo\PaczkaWRuchu\Model\GenerateProtocolResponse;
 
@@ -138,6 +140,23 @@ class PaczkaWRuchuClient extends \SoapClient
 
             $labelData = isset($rsp->LabelData) ? $rsp->LabelData : null;
             $response  = new GenerateProtocolResponse($tmpRsp['Table'], $labelData);
+        }
+
+        return $response;
+    }
+
+
+    public function getBusinessPackStatus(BusinessPackStatusRequest $businessPackStatusRequest)
+    {
+        $businessPackStatusRequest->setAuthParams($this->partnerId, $this->partnerKey);
+
+        $rsp      = $this->GiveMePackStatus($businessPackStatusRequest);
+        $response = null;
+
+        if ($rsp->GiveMePackStatusResult && $rsp->GiveMePackStatusResult->any) {
+            $rspXml = simplexml_load_string($rsp->GiveMePackStatusResult->any);
+
+            return new BusinessPackStatusResponse((array)$rspXml->NewDataSet->PackStatus);
         }
 
         return $response;

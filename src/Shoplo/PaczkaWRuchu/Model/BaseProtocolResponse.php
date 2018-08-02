@@ -2,7 +2,7 @@
 
 namespace Shoplo\PaczkaWRuchu\Model;
 
-class BaseProtocolResponse
+class BaseProtocolResponse extends AbstractArrayResponse
 {
     /** @var string */
     public $Err;
@@ -24,15 +24,4 @@ class BaseProtocolResponse
 
     /** @var string */
     public $status_opis;
-
-    /**
-     * BaseProtocolResponse constructor.
-     * @param $protocol
-     */
-    public function __construct($protocol)
-    {
-        foreach ((array)$protocol as $item => $value) {
-            $this->{$item} = $value;
-        }
-    }
 }

@@ -2,14 +2,7 @@
 
 namespace Shoplo\PaczkaWRuchu\Model;
 
-/**
- * Created by PhpStorm.
- * User: adrianadamiec
- * Date: 13.06.2018
- * Time: 13:03
- */
-
-class BusinessPackListResponse
+class BusinessPackListResponse implements ResponseInterface
 {
     public $packList;
     public $label;
@@ -27,5 +20,4 @@ class BusinessPackListResponse
 
         $this->label = $label;
     }
-
 }

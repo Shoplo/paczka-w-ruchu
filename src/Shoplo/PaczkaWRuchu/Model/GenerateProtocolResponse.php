@@ -2,7 +2,7 @@
 
 namespace Shoplo\PaczkaWRuchu\Model;
 
-class GenerateProtocolResponse
+class GenerateProtocolResponse implements ResponseInterface
 {
     public $packList;
     public $label;

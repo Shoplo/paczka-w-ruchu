@@ -2,7 +2,7 @@
 
 namespace Shoplo\PaczkaWRuchu\Model;
 
-class BusinessPackResponse
+class BusinessPackResponse extends AbstractArrayResponse
 {
     public $Err;
     public $ErrDes;
@@ -21,11 +21,10 @@ class BusinessPackResponse
      * @param $rspArr
      * @param $label
      */
-    public function __construct($rspArr, $label)
+    public function __construct(array $response, $label)
     {
-        foreach ($rspArr as $item => $value) {
-            $this->{$item} = $value;
-        }
+        parent::__construct($response);
+
         $this->label = $label;
     }
 }
