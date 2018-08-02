@@ -145,8 +145,8 @@ class PaczkaWRuchuClient extends \SoapClient
         return $response;
     }
 
-
-    public function getBusinessPackStatus(BusinessPackStatusRequest $businessPackStatusRequest)
+    public function getBusinessPackStatus(BusinessPackStatusRequest $businessPackStatusRequest
+    ): ?BusinessPackStatusResponse
     {
         $businessPackStatusRequest->setAuthParams($this->partnerId, $this->partnerKey);
 
