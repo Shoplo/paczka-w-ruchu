@@ -4,6 +4,9 @@ namespace Shoplo\PaczkaWRuchu\Model;
 
 class GenerateProtocolResponse implements ResponseInterface
 {
+    /**
+     * @var BaseProtocolResponse[]
+     */
     public $packList;
     public $label;
 
