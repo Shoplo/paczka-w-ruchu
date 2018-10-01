@@ -15,7 +15,7 @@ use Shoplo\PaczkaWRuchu\Model\GenerateProtocolResponse;
 
 class PaczkaWRuchuClient extends \SoapClient
 {
-    public const WSDL = 'https://api.paczkawruchu.pl/WebServicePwRProd/WebServicePwR.asmx?wsdl';
+    public const WSDL = 'https://91.242.220.103/WebServicePwRProd/WebServicePwR.asmx?WSDL';
     public const WSDL_TEST = 'https://api-test.paczkawruchu.pl/WebServicePwR/WebServicePwRTest.asmx?wsdl';
 
     private $partnerId;
