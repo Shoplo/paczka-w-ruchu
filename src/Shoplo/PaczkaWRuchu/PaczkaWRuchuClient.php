@@ -39,7 +39,9 @@ class PaczkaWRuchuClient extends \SoapClient
             'stream_context' => stream_context_create(
                 [
                     'ssl' => [
-                        'crypto_method' => STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT,
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                        'allow_self_signed' => true
                     ],
                 ]
             ),
