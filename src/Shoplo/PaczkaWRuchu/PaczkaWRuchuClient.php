@@ -10,6 +10,8 @@ use Shoplo\PaczkaWRuchu\Model\BusinessPackRequest;
 use Shoplo\PaczkaWRuchu\Model\BusinessPackResponse;
 use Shoplo\PaczkaWRuchu\Model\BusinessPackStatusRequest;
 use Shoplo\PaczkaWRuchu\Model\BusinessPackStatusResponse;
+use Shoplo\PaczkaWRuchu\Model\CancelPackRequest;
+use Shoplo\PaczkaWRuchu\Model\CancelPackResponse;
 use Shoplo\PaczkaWRuchu\Model\GenerateProtocolRequest;
 use Shoplo\PaczkaWRuchu\Model\GenerateProtocolResponse;
 
@@ -158,6 +160,21 @@ class PaczkaWRuchuClient extends \SoapClient
             $rspXml = simplexml_load_string($rsp->GiveMePackStatusResult->any);
 
             return new BusinessPackStatusResponse((array)$rspXml->NewDataSet->PackStatus);
+        }
+
+        return $response;
+    }
+
+    public function cancelPack(CancelPackRequest $cancelPackRequest): CancelPackResponse
+    {
+        $cancelPackRequest->setAuthParams($this->partnerId, $this->partnerKey);
+
+        $rsp = $this->PutCustomerPackCanceled($cancelPackRequest);
+
+        $response = null;
+        if ($rsp->PutCustomerPackCanceledResult && $rsp->PutCustomerPackCanceledResult->any) {
+            $rspXml = simplexml_load_string($rsp->PutCustomerPackCanceledResult->any);
+            $response = new CancelPackResponse((array)$rspXml->NewDataSet);
         }
 
         return $response;
